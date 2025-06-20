@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="abcd77c6-c7e8-408b-a0e7-171a42ef1c2d" name="Changes" comment="v2.01 (add player cards, add stat generate for cards, add showing ovrl and pos, reworked add and back to draft func,add game plots, add errors print, add physical stat generate, reworked a lot of visual content)">
+    <list default="true" id="abcd77c6-c7e8-408b-a0e7-171a42ef1c2d" name="Changes" comment="v2.02 (finish draft window, finish transition for new window(create team window), create new loading screen for gm3)">
+      <change beforePath="$PROJECT_DIR$/.idea/basketMANAGER.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/basketMANAGER.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/consepts/tasks.txt" beforeDir="false" afterPath="$PROJECT_DIR$/consepts/tasks.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imges/player_card/conf_player_icn_small.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/imges/player_card/conf_player_icn_small.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imges/player_card/rejct_player_icn_small.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/imges/player_card/rejct_player_icn_small.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imges/buttons/start_but.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/imges/effects/blacked_screen(1200_950).png" beforeDir="false" afterPath="$PROJECT_DIR$/imges/effects/blacked_screen(1200_950).png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imges/main_logo.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +45,6 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2w3Tbaa243iHpdXxT3B5x3Aqguy" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -50,9 +52,11 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.tests1.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -64,7 +68,7 @@
       <recent name="C:\Users\79782\PycharmProjects\basketMANAGER\imges\players" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="basketMANAGER" />
       <option name="ENV_FILES" value="" />
@@ -87,16 +91,39 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="tests1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="basketMANAGER" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.tests1" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-a5bc9544c897-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.23654.177" />
+        <option value="bundled-python-sdk-dfff61a61320-9cdd278e9d02-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-251.25410.159" />
       </set>
     </attachedChunks>
   </component>
@@ -165,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747027268069</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="v2.02 (finish draft window, finish transition for new window(create team window), create new loading screen for gm3)">
+      <option name="closed" value="true" />
+      <created>1747192799457</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1747192799457</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -175,6 +210,7 @@
     <MESSAGE value="v1.01 (first worcked version (add manipulate system for draft and my_team, also create money system))" />
     <MESSAGE value="v1.02 (add music system and new loading screens and lots new feaches)" />
     <MESSAGE value="v2.01 (add player cards, add stat generate for cards, add showing ovrl and pos, reworked add and back to draft func,add game plots, add errors print, add physical stat generate, reworked a lot of visual content)" />
-    <option name="LAST_COMMIT_MESSAGE" value="v2.01 (add player cards, add stat generate for cards, add showing ovrl and pos, reworked add and back to draft func,add game plots, add errors print, add physical stat generate, reworked a lot of visual content)" />
+    <MESSAGE value="v2.02 (finish draft window, finish transition for new window(create team window), create new loading screen for gm3)" />
+    <option name="LAST_COMMIT_MESSAGE" value="v2.02 (finish draft window, finish transition for new window(create team window), create new loading screen for gm3)" />
   </component>
 </project>

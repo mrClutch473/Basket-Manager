@@ -8,21 +8,29 @@ from pydoc_data.topics import topics
 import pygame
 from pygame import USEREVENT
 
+
+image_path_for_android = '/data/data/org.bsktMngr.bsktMngr/files/app/'
+
 os.environ['SDL_VIDEO_CENTERED'] = '1'
 pygame.init()
-screen = pygame.display.set_mode((900, 950)) #, flags=pygame.NOFRAME
+screen = pygame.display.set_mode((1024, 1024), flags=pygame.NOFRAME) #, flags=pygame.NOFRAME
+#screen = pygame.display.set_mode((1200, 990), flags=pygame.NOFRAME) #
 
 pygame.display.set_caption("BaskeT_ManageR")
 iconM = pygame.image.load('imges/bsket_icon.png').convert_alpha()
 pygame.display.set_icon(iconM)
 
 #variables
-game_status = 2
+game_mode = -1
 game_plot = 1
 
-namesArr = ["Эндрю Смит", "Майкл Джонсон", "Кристофер Уилсон", "Дэвид Браун", "Джеймс Джонс", "Джошуа Мартин", "Роберт Ли", "Итан Тейлор", "Бенжamин Гарбус", "Гарретт Уайт", "Логан Мартинeз", "Майкл Кларк", "Гарретт Хантер", "Чарльз Линч", "Джозеф Сандерс", "Кевин Риверс", "Уильям Паттерсон", "Дональд Фостер", "Лиам Лонг", "Оливер Тейлор", "Антонио Питерсон", "Натан Мур", "Филипп Диксон", "Закари Хейс", "Тимоти Чейз", "Дерек Леман", "Кайл Стоун", "Сет Говард", "Трейси Мэлоун", "Алан Мейсон", "Роберт Фишер", "Честер Бёрнс", "Эммет Гриффин", "Брэндон Хэллоуэлл", "Дилан Мортон", "Эдвард Розен", "Алан Кук", "Гарри Симмс", "Сэм Келли", "Наоми Джером", "Винсент Карпентер", "Роберто Браун", "Стэнли Джереми", "Фрэнк Дрейк", "Джереми Стоун", "Джосс Диксон", "Саймон Армстронг", "Брайан Шиппер", "Тревор Бойл", "Гарет Адамс", "Глаффер Эванс", "Даллас Хопкинс", "Джонни Мартинес", "Сидни Мартин", "Мерфи Стоуни", "Джимми Хаверэн", "Кингсли Браун", "Джексон Озер", "Энн Мур", "Тэри кепонд", "Гейб Хотели", "Блэз Уинтер", "Патрик Оваль", "Ральф Кинг", "Грег Миллер", "Морис Рейн", "Олдрик Грабов", "Эрик Келли", "Томас Браун", "Крис Генри", "Трэвис Мун", "Николь Дики", "Джон Мэссей", "Гарри Линч", "Брэк Мальчик", "Лоренцо Типпет", "Шотт Мартин", "Альберт Монтгомери", "Джонни Блэк", "Майкл Боуер", "Стефан Шеридэн", "Корм Блэк", "Сквозляк Вогл", "Лерой Симон", "Уилберт Вест", "Стэнли Коваль", "Туфал Бах", "Тед Блэтчли", "Керни Паркер", "Ларри Гайтер", "Шепп Сигал", "Коул Норрис", "Линн Манс", "Тони Фостер", "Марио Корбин", "Долорес Бенсон", "Райан Хейл", "Митчелл Кент", "Гарри тээрэм", "Ужлер Испити", "Тим Гетси", "Гленн Габли", "Митч Рэнит", "Эрни Бодьяк", "Донн Ларсен", "Алан Трейси", "Лерoy Смит", "Ли Брэдли", "Хайден О’то", "Роланд Линч", "Ника Кэри", "Тим Ивейл", "Тельма Хосре", "Гас Мееры", "Таня О’Мэри", "Джексон Райт", "Авери Рэй", "Ллойд О’Тис", "Дэлл Браун", "Агостино Ауле", "Кимбер Кармен", "Глин Колитти", "Энтони Кэри", "Бенджамин Хостей", "Майкл Смит", "Оззи Ролважа", "Эмиль Гаваль", "Фред Уотс", "Ларри Верн", "Роберт Скиммей", "Ноah Уонг", "Патрик Бэнжам", "Райан Тейлор", "Эдгар Ноу", "Бен Смит", "Тим Тосер", "Джаред Доу", "Рональд Кортни", "Омар Каппи", "Дервин Монтгомери", "Деннис Хасгард", "Александр Тейлор", "Ченсел Ворени", "Донни Льюис", "Шон Хан", "Джозеф Гамус", "Пол Риккерт", "Кен Ворожи", "Корин Бенет", "Метт Дики", "Эвант Дорнад", "Аарон Бенджамин", "Роберт Хэйс", "Эксперт Эдвардс", "Джейк Дизель", "Уолтер Недо", "Эрик Туппер", "Джорджсон Браун", "Клер Крейг", "Гарри Пэттерсон", "Бенни Уолли", "Тони Мартин", "Эджи Хрущев", "Ник Третьяков", "Ларри Хаббард", "Эдриан Ву", "Бен Саймон", "Майкл Хиер", "Рэй Мэрил", "Роб Диктат", "Аможер Ван", "Бен Джонсон", "Гост Ким", "Леон Кук", "Райан Серчев", "Джордан Мартин", "Терри Срезин", "Лонни Мартинес", "Райан Бороз", "Дмирал Халил", "Майк Чарльз", "Тим Браун", "Богдан Якушен"]
+namesArr = ("Эндрю Смит", "Майкл Джонсон", "Кристофер Уилсон", "Дэвид Браун", "Джеймс Джонс", "Джошуа Мартин", "Роберт Ли", "Итан Тейлор", "Бенжamин Гарбус", "Гарретт Уайт", "Логан Мартинeз", "Майкл Кларк", "Гарретт Хантер", "Чарльз Линч", "Джозеф Сандерс", "Кевин Риверс", "Уильям Паттерсон", "Дональд Фостер", "Лиам Лонг", "Оливер Тейлор", "Антонио Питерсон", "Натан Мур", "Филипп Диксон", "Закари Хейс", "Тимоти Чейз", "Дерек Леман", "Кайл Стоун", "Сет Говард", "Трейси Мэлоун", "Алан Мейсон", "Роберт Фишер", "Честер Бёрнс", "Эммет Гриффин", "Брэндон Хэллоуэлл", "Дилан Мортон", "Эдвард Розен", "Алан Кук", "Гарри Симмс", "Сэм Келли", "Наоми Джером", "Винсент Карпентер", "Роберто Браун", "Стэнли Джереми", "Фрэнк Дрейк", "Джереми Стоун", "Джосс Диксон", "Саймон Армстронг", "Брайан Шиппер", "Тревор Бойл", "Гарет Адамс", "Глаффер Эванс", "Даллас Хопкинс", "Джонни Мартинес", "Сидни Мартин", "Мерфи Стоуни", "Джимми Хаверэн", "Кингсли Браун", "Джексон Озер", "Энн Мур", "Тэри кепонд", "Гейб Хотели", "Блэз Уинтер", "Патрик Оваль", "Ральф Кинг", "Грег Миллер", "Морис Рейн", "Олдрик Грабов", "Эрик Келли", "Томас Браун", "Крис Генри", "Трэвис Мун", "Николь Дики", "Джон Мэссей", "Гарри Линч", "Брэк Мальчик", "Лоренцо Типпет", "Шотт Мартин", "Альберт Монтгомери", "Джонни Блэк", "Майкл Боуер", "Стефан Шеридэн", "Корм Блэк", "Сквозляк Вогл", "Лерой Симон", "Уилберт Вест", "Стэнли Коваль", "Туфал Бах", "Тед Блэтчли", "Керни Паркер", "Ларри Гайтер", "Шепп Сигал", "Коул Норрис", "Линн Манс", "Тони Фостер", "Марио Корбин", "Долорес Бенсон", "Райан Хейл", "Митчелл Кент", "Гарри тээрэм", "Ужлер Испити", "Тим Гетси", "Гленн Габли", "Митч Рэнит", "Эрни Бодьяк", "Донн Ларсен", "Алан Трейси", "Лерoy Смит", "Ли Брэдли", "Хайден О’то", "Роланд Линч", "Ника Кэри", "Тим Ивейл", "Тельма Хосре", "Гас Мееры", "Таня О’Мэри", "Джексон Райт", "Авери Рэй", "Ллойд О’Тис", "Дэлл Браун", "Агостино Ауле", "Кимбер Кармен", "Глин Колитти", "Энтони Кэри", "Бенджамин Хостей", "Майкл Смит", "Оззи Ролважа", "Эмиль Гаваль", "Фред Уотс", "Ларри Верн", "Роберт Скиммей", "Ноah Уонг", "Патрик Бэнжам", "Райан Тейлор", "Эдгар Ноу", "Бен Смит", "Тим Тосер", "Джаред Доу", "Рональд Кортни", "Омар Каппи", "Дервин Монтгомери", "Деннис Хасгард", "Александр Тейлор", "Ченсел Ворени", "Донни Льюис", "Шон Хан", "Джозеф Гамус", "Пол Риккерт", "Кен Ворожи", "Корин Бенет", "Метт Дики", "Эвант Дорнад", "Аарон Бенджамин", "Роберт Хэйс", "Эксперт Эдвардс", "Джейк Дизель", "Уолтер Недо", "Эрик Туппер", "Джорджсон Браун", "Клер Крейг", "Гарри Пэттерсон", "Бенни Уолли", "Тони Мартин", "Эджи Хрущев", "Ник Третьяков", "Ларри Хаббард", "Эдриан Ву", "Бен Саймон", "Майкл Хиер", "Рэй Мэрил", "Роб Диктат", "Аможер Ван", "Бен Джонсон", "Гост Ким", "Леон Кук", "Райан Серчев", "Джордан Мартин", "Терри Срезин", "Лонни Мартинес", "Райан Бороз", "Дмирал Халил", "Майк Чарльз", "Тим Браун", "Богдан Якушен")
 
-posesArr = ["PG", "SG", "SF", "PF", "C"]
+random_team_names = ("Летящие Совы", "Огненные Соколы", "Стальные Тигры", "Космические Дельфины", "Золотые Орлы", "Неоновые Молнии", "Супер Крабсы", "Ледяные Драконы", "Мифические Единороги", "Лунные Хищники", "Магические Львы", "Буревестники Небес", "Снежные Химеры", "Пиратские Корабли", "Теневые Призраки", "Дикие Вулканы", "Солнечные Лыжи", "Танцующие Фламинго", "Холодные Актеры", "Бурные Ветра", "Смелые Ракеты", "Дельтапланы Судьбы", "Защитники Мира", "Боевики Картелей", "Светящиеся Кометы", "Исполинские Помидоры", "Звёздные Грифоны", "Гигантские Пингвины", "Танцующие Надежды", "Энергия Солнца", "Алмазные Воины", "Теневые Сверкания", "Безумные Дизайнеры", "Летучие Мыши", "Бравые Мысли", "Волшебные Листья", "Бурные Фьельды", "Шумные Эликсиры", "Странники Звёзд", "НеоноваяЭпопея", "Технические Машины", "Ультра Чудовища", "Ракеты-Гиганты", "Золотые Густоты", "Казино Птиц", "Секретные Ходы", "Лучи Света", "Лунные Небоскрёбы", "Небесные Корабли", "Вихревые Бойцы", "Огненные Вороны", "Цирковые Слоны", "Безумцы Потока", "Сказочные Рыцари", "Карнавальные Жирафы", "Прыгающие Фьельды", "Сиреневые Буревестники", "Эхо Страха", "Снежные Ниндзі", "Гнездовье Алхимиков", "Бурлящие Реки", "Ледяные Гиганты", "Заряженные Щелкуны", "Фантазийные Носороги", "Космические Параллели", "Вдохновленные Венеры", "Царственные Клубы", "Громовая Атака", "Волшебные Ослепления", "Радужные Океаны", "Воробьиные Замыслы", "Саблезубые Бандиты", "Луна и Солнце", "Медные Сферы", "Драгоценные Яйца", "Песни Севера", "Космические Паутины", "Сияющие Звезды", "Завоеватели Вселенной", "Шепчущие Тени", "Тайные Нападения", "Невидимые Рыцари", "Скрепленные Мечты", "Искрометная Сила", "Лавровый Плод", "Скаты-Друзья", "Искорки Надежды", "Морские Львы", "Галактические Полководцы", "Трясущиеся Ручьи", "Эфирные Узоры", "Планетные Защитники", "Всплески Эмоций", "Облачные Ремесленники", "Загадочные Дороги", "Танцующие Тонны", "Светящиеся Растения", "Серебряные Зебры", "Огненные Самолёты", "Морские Вертолеты", "Древесные Друзья", "Тундровые Боги", "Заброшенные Сады", "Тепло Доброты", "Ночные Операции", "Ветры Перемен", "Радужные Барабаны")
+
+random_team_managers = ("Алексей Тимофеев", "Брайан Мартинов", "София Уилкинсон", "Тимур Далбеков", "Роберт Ким", "Олеся Каверина", "Майкл Скоморов", "Виктория Невская", "Алан Ренар", "Николай Чернов", "Эмили Смит", "Дмитрий Кишиневский", "Сара Браун", "Антон Розанов", "Лора Белль", "Игорь Селиванов", "Кристина Ламберти", "Артур Блом", "Анастасия Варламова", "Стивен Гибсон", "Валентина Шмидт", "Кирилл Нестеров", "Люси Левин", "Денис Петров", "Жасмин Фарид", "Михаил Воробьев", "Элизабета Синиця", "Леонардо Мартинез", "Анна Зайцев", "Фёдор Кудрявцев", "Оливия Парк", "Григорий Степанов", "Татьяна Мороз", "Никита Фенюшкин", "Лиам Уотсон", "Полина Мартынюк", "Семан Мельчаков", "Харрисон Уайз", "Екатерина Ремезова", "Тимофей Ильин", "Зои Бёрнс", "Данила Кашаев", "Лука Мчедлишвили", "Эмилия Гонзалес", "Вадим Кифаров", "Людмила Панова", "Марк Бэрд", "Роман Ярушин", "Эйми Кира", "Василий Петренко", "Жюли Верно", "Кирилл Бочаров", "Алиса Горовая", "Николас Тейлор", "Мирослава Прокофьева", "Сэм Розен", "Данила Ларионов", "Ким Тэхён", "Артемий Тихонов", "Агата Низовка", "Остин Браун", "Юлия Коррель", "Геннадий Кузьмич", "Кристофер Хантер", "Евгения Лауренс", "Александр Бенедиктов", "Сидней Грант", "Мария Крепкая", "Эвана Сачков", "Арсений Чекмагушев", "Эмилиас Кочетков", "Захар Глушков", "Дональд Кайл", "Тимур Крутов", "Александра Досаждева", "Ноа Хан", "Вениамин Коновалов", "Мелисса Тиринг", "Дамир Шарипов", "Жанна Чиркова", "Лорен Дженкинс", "Филипп Макаров", "Элеонора Сивкова", "Джек Саймон", "Станислав Синичкин", "Полина Корнеева", "Оскар Краузе", "Азалия Кудрявцева", "Денис Хосайнов", "Ксения Ларина", "Иван Чуднов", "Кристоф Сидоренко", "Дин Фролов", "Олеся Печенкина", "Эндрю Смит", "Майкл Джонсон", "Кристофер Уилсон", "Дэвид Браун", "Джеймс Джонс", "Джошуа Мартин", "Роберт Ли", "Итан Тейлор", "Бенжamин Гарбус", "Гарретт Уайт", "Логан Мартинeз", "Майкл Кларк", "Гарретт Хантер", "Чарльз Линч", "Джозеф Сандерс", "Кевин Риверс", "Уильям Паттерсон", "Дональд Фостер", "Лиам Лонг", "Оливер Тейлор", "Антонио Питерсон", "Натан Мур", "Филипп Диксон", "Закари Хейс", "Тимоти Чейз", "Дерек Леман", "Кайл Стоун", "Сет Говард", "Трейси Мэлоун", "Алан Мейсон", "Роберт Фишер", "Честер Бёрнс", "Эммет Гриффин", "Брэндон Хэллоуэлл", "Дилан Мортон", "Эдвард Розен", "Алан Кук", "Гарри Симмс", "Сэм Келли", "Наоми Джером", "Винсент Карпентер", "Роберто Браун", "Стэнли Джереми", "Фрэнк Дрейк", "Джереми Стоун", "Джосс Диксон", "Саймон Армстронг", "Брайан Шиппер", "Тревор Бойл", "Гарет Адамс", "Глаффер Эванс", "Даллас Хопкинс", "Джонни Мартинес", "Сидни Мартин", "Мерфи Стоуни", "Джимми Хаверэн", "Кингсли Браун", "Джексон Озер", "Энн Мур", "Тэри кепонд", "Гейб Хотели", "Блэз Уинтер", "Патрик Оваль", "Ральф Кинг", "Грег Миллер", "Морис Рейн", "Олдрик Грабов", "Эрик Келли", "Томас Браун", "Крис Генри", "Трэвис Мун", "Николь Дики", "Джон Мэссей", "Гарри Линч", "Брэк Мальчик", "Лоренцо Типпет", "Шотт Мартин", "Альберт Монтгомери", "Джонни Блэк", "Майкл Боуер", "Стефан Шеридэн", "Корм Блэк", "Сквозляк Вогл", "Лерой Симон", "Уилберт Вест", "Стэнли Коваль", "Туфал Бах", "Тед Блэтчли", "Керни Паркер", "Ларри Гайтер", "Шепп Сигал", "Коул Норрис", "Линн Манс", "Тони Фостер", "Марио Корбин", "Долорес Бенсон", "Райан Хейл", "Митчелл Кент", "Гарри тээрэм", "Ужлер Испити", "Тим Гетси", "Гленн Габли", "Митч Рэнит", "Эрни Бодьяк", "Донн Ларсен", "Алан Трейси", "Лерoy Смит", "Ли Брэдли", "Хайден О’то", "Роланд Линч", "Ника Кэри", "Тим Ивейл", "Тельма Хосре", "Гас Мееры", "Таня О’Мэри", "Джексон Райт", "Авери Рэй", "Ллойд О’Тис", "Дэлл Браун", "Агостино Ауле", "Кимбер Кармен", "Глин Колитти", "Энтони Кэри", "Бенджамин Хостей", "Майкл Смит", "Оззи Ролважа", "Эмиль Гаваль", "Фред Уотс", "Ларри Верн", "Роберт Скиммей", "Ноah Уонг", "Патрик Бэнжам", "Райан Тейлор", "Эдгар Ноу", "Бен Смит", "Тим Тосер", "Джаред Доу", "Рональд Кортни", "Омар Каппи", "Дервин Монтгомери", "Деннис Хасгард", "Александр Тейлор", "Ченсел Ворени", "Донни Льюис", "Шон Хан", "Джозеф Гамус", "Пол Риккерт", "Кен Ворожи", "Корин Бенет", "Метт Дики", "Эвант Дорнад", "Аарон Бенджамин", "Роберт Хэйс", "Эксперт Эдвардс", "Джейк Дизель", "Уолтер Недо", "Эрик Туппер", "Джорджсон Браун", "Клер Крейг", "Гарри Пэттерсон", "Бенни Уолли", "Тони Мартин", "Эджи Хрущев", "Ник Третьяков", "Ларри Хаббард", "Эдриан Ву", "Бен Саймон", "Майкл Хиер", "Рэй Мэрил", "Роб Диктат", "Аможер Ван", "Бен Джонсон", "Гост Ким", "Леон Кук", "Райан Серчев", "Джордан Мартин", "Терри Срезин", "Лонни Мартинес", "Райан Бороз", "Дмирал Халил", "Майк Чарльз", "Тим Браун", "Богдан Якушен")
+
+posesArr = ("PG", "SG", "SF", "PF", "C")
 
 end_time_l = 5
 end_time_l_gm3 = 4.3
@@ -85,6 +93,8 @@ def gen_stat_pl():
 
 
 #LOADING_SCREEN
+loading1_bg = pygame.image.load('imges/loading_scr/l_bg1.png').convert_alpha()
+
 loading_img = pygame.image.load('imges/loading_scr/loading_icn.png').convert_alpha()
 loading_img0 = pygame.image.load('imges/loading_scr/loading_icn0.png').convert_alpha()
 loading_img1 = pygame.image.load('imges/loading_scr/loading_icn1.png').convert_alpha()
@@ -94,6 +104,8 @@ loading_arr = [loading_img0,loading_img1,loading_img2,loading_img3,loading_img]
 cur_load_id = 0
 
 #LOADING_SCREEN_GM3
+loading3_bg = pygame.image.load('imges/loading_scr/l_bg3.png').convert_alpha()
+
 loading_img_3_0 = pygame.image.load('imges/loading_scr/loading_icn_gm3_0.png').convert_alpha()
 loading_img_3_1 = pygame.image.load('imges/loading_scr/loading_icn_gm3_1.png').convert_alpha()
 loading_img_3_2 = pygame.image.load('imges/loading_scr/loading_icn_gm3_2.png').convert_alpha()
@@ -115,12 +127,22 @@ start_loading_img5 = pygame.image.load('imges/start_load/start_load_img5.png').c
 start_loading_arr = [start_loading_img0,start_loading_img1,start_loading_img2,start_loading_img3,start_loading_img4,start_loading_img5,start_loading_img]
 cur_start_load_id = 0
 
+#TEAM_LOGOS_IMAGES
+team_logo_1 = [pygame.image.load('imges/team_logos/embl1_0.png').convert_alpha(),pygame.image.load('imges/team_logos/embl1_1.png').convert_alpha(),pygame.image.load('imges/team_logos/embl1_2.png').convert_alpha(),pygame.image.load('imges/team_logos/embl1_3.png').convert_alpha(),pygame.image.load('imges/team_logos/embl1_4.png').convert_alpha()]
+team_logo_2 = [pygame.image.load('imges/team_logos/embl2_0.png').convert_alpha(),pygame.image.load('imges/team_logos/embl2_1.png').convert_alpha(),pygame.image.load('imges/team_logos/embl2_2.png').convert_alpha(),pygame.image.load('imges/team_logos/embl2_3.png').convert_alpha(),pygame.image.load('imges/team_logos/embl2_4.png').convert_alpha()]
+team_logo_3 = [pygame.image.load('imges/team_logos/embl3_0.png').convert_alpha(),pygame.image.load('imges/team_logos/embl3_1.png').convert_alpha(),pygame.image.load('imges/team_logos/embl3_2.png').convert_alpha(),pygame.image.load('imges/team_logos/embl3_3.png').convert_alpha(),pygame.image.load('imges/team_logos/embl3_4.png').convert_alpha()]
+team_logo_4 = [pygame.image.load('imges/team_logos/embl4_0.png').convert_alpha(),pygame.image.load('imges/team_logos/embl4_1.png').convert_alpha(),pygame.image.load('imges/team_logos/embl4_2.png').convert_alpha(),pygame.image.load('imges/team_logos/embl4_3.png').convert_alpha(),pygame.image.load('imges/team_logos/embl4_4.png').convert_alpha()]
+team_logo_5 = [pygame.image.load('imges/team_logos/embl5_0.png').convert_alpha(),pygame.image.load('imges/team_logos/embl5_1.png').convert_alpha(),pygame.image.load('imges/team_logos/embl5_2.png').convert_alpha(),pygame.image.load('imges/team_logos/embl5_3.png').convert_alpha(),pygame.image.load('imges/team_logos/embl5_4.png').convert_alpha()]
+team_logo_arr = [team_logo_1,team_logo_2,team_logo_3,team_logo_4,team_logo_5]
+cur_logo_embl = 0
+cur_logo_color = 0
+
 
 #MAIN MENU
-menu_logo = pygame.image.load('imges/main_logo.png').convert_alpha()
-start_button_img = pygame.image.load('imges/buttons/start_but.png').convert_alpha()
-start_button_rect = start_button_img.get_rect(topleft=(200, 600))
-
+menu_logo = pygame.image.load('imges/main_menu/main_logo.png').convert_alpha()
+start_button_img = pygame.image.load('imges/main_menu/start_but1.png').convert_alpha()
+start_button_rect = start_button_img.get_rect(topleft=(336, 760))
+main_menu_bg = pygame.image.load('imges/main_menu/baground.jpeg').convert_alpha()
 
 
 #FONTS
@@ -146,6 +168,14 @@ cardsOvrlCRDSecFontBald.set_bold(True)
 complTeamFontBald = pygame.font.Font('fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf', 25)
 complTeamFontBald.set_bold(True)
 complTeamFontSec = pygame.font.Font('fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf', 20)
+team_setup1 = pygame.font.Font('fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf', 22)
+team_setup1.set_bold(True)
+team_setup2 = pygame.font.Font('fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf', 22)
+team_setup3 = pygame.font.Font('fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf', 30)
+mainBaldFont_team_setup = pygame.font.Font('fonts/ShantellSans-VariableFont_BNCE,INFM,SPAC,wght.ttf', 30)
+mainBaldFont_team_setup.set_bold(True)
+team_logo_font = pygame.font.Font('fonts/YujiMai-Regular.ttf', 35)
+mainBaldFont.set_bold(True)
 
 #DRAFT MENU
 square_mon = pygame.Surface((170, 70))
@@ -549,6 +579,55 @@ reject_player_img = pygame.image.load('imges/player_card/rejct_player_icn_small.
 confirm_player_rect = confirm_player_img.get_rect(topleft=(385, 660))
 reject_player_rect = reject_player_img.get_rect(topleft=(735, 660))
 
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#TEAM_SETUP_TEXT
+yr_team_text = mainBaldFont.render("ВАША КОМАНДА", True, (112, 128, 144))
+yr_team_name_text = mainBaldFont_team_setup.render("НАЗВАНИЕ:", True, (112, 128, 144))
+yr_team_manager_text = mainBaldFont_team_setup.render("ГЛАВНЫЙ ТРЕНЕР:", True, (112, 128, 144))
+team_name = ""
+team_name_input_check = False
+team_name_input_text = team_setup1.render("ВВОДИТЕ НАЗВАНИЕ ВАШЕЙ КОМАНДЫ:", True, (112, 128, 144))
+input_box_team_name = pygame.Rect(590, 100, 560, 50)
+
+team_logo_input_text = team_setup1.render("ВЫБЕРИТЕ ЭМБЛЕММУ И ЦВЕТ:", True, (112, 128, 144))
+team_logo_type_text = [team_logo_font.render("1", True, (0, 0, 0)),team_logo_font.render("2", True, (0, 0, 0)),team_logo_font.render("3", True, (0, 0, 0)),team_logo_font.render("4", True, (0, 0, 0)),team_logo_font.render("5", True, (0, 0, 0))]
+team_logo_type_rect = []
+team_logo_color_text = [(255,154,46), (215,55,47), (58,93,193), (255, 213, 4), (74,203,109)]
+team_logo_color_active_text = [(255, 100, 0), (204, 4, 4), (6, 6, 184), (240,237,42), (24, 209, 24)]
+team_logo_color_rect = []
+
+manager_name = ""
+team_manager_input_check = False
+team_manager_input_text = team_setup1.render("ВВОДИТЕ ИМЯ МЕНЕДЖЕРА КОМАНДЫ:", True, (112, 128, 144))
+input_box_manager_name = pygame.Rect(590, 240, 560, 50)
+
+#TEAM_SETUP_FUNC
+def setup_rect_for_but():
+    l_x_2 = 655
+    l_y_2 = 460
+    for l_i_2 in range(5):
+        team_logo_type_rect.append(pygame.Rect(l_x_2 - 23, l_y_2 - 8, 71, 71))
+        l_x_2 += 100
+
+    ll_x_2 = 655
+    ll_y_2 = 600
+    for ll_i_2 in range(5):
+        team_logo_color_rect.append(pygame.Rect(ll_x_2 - 23, ll_y_2 - 8, 71, 71))
+        ll_x_2 += 100
+
+#TEAM_SETUP_IMAGES
+team_setup_next_but_img = pygame.image.load('imges/team_setup/t_s_next_button.png').convert_alpha()
+team_setup_back_but_img = pygame.image.load('imges/team_setup/t_s_back_button.png').convert_alpha()
+team_setup_rnd_but_img = pygame.image.load('imges/team_setup/t_s_random_button.png').convert_alpha()
+team_setup_rnd_but_rect = team_setup_rnd_but_img.get_rect(topleft=(800,780))
+team_setup_back_but_rect = team_setup_rnd_but_img.get_rect(topleft=(600, 780))
+team_setup_next_but_rect = team_setup_rnd_but_img.get_rect(topleft=(1000, 780))
+
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 #ERORS
 my_team_text_fault_max_1 = erorFont.render("В команде не хватает места!", True, (128, 0, 0))
 my_team_text_fault_max_2 = erorFont.render("Максимальный размер команды: " + str(max_team_val), True, (128, 0, 0))
@@ -573,7 +652,7 @@ main_tracks_arr = [tr1,tr2,tr3,tr4,tr5, tr6, tr7, tr8, tr9]
 cur_track = random.randint(0, len(main_tracks_arr)-1)
 print("cur_track: " + str(cur_track))
 
-vol_music = 0
+vol_music = 0.1
 prev_vol_music = 0.1
 mute_check = False
 
@@ -589,6 +668,10 @@ er_maxVal_check = False
 er_money_check = False
 tap_card_TorD = 0
 compl_team = False
+#gm4
+t_s_check_click_rnd = True
+t_s_check_click_back = True
+t_s_from_back = False
 
 delay_gm_3_check = True
 cur_load_id_3 = 0
@@ -596,12 +679,12 @@ cur_load_id_3 = 0
 while running: #ГЛАВНЫЙ ЦИКЛ --------------------------------------------------------------------------------------------------------------------------------------
     for jj in main_tracks_arr:
         jj.set_volume(vol_music)
-    if game_status == -1: # СТАРТОВЫЙ ЗАГРУЗОЧНЫЙ ЭКРАН
+    if game_mode == -1: # СТАРТОВЫЙ ЗАГРУЗОЧНЫЙ ЭКРАН
         if check_start_load_gm_not1:
             start_time_load_st = time.time()
             check_start_load_gm_not1 = False
 
-        screen.blit(start_loading_arr[cur_start_load_id], (10, 200))
+        screen.blit(start_loading_arr[cur_start_load_id], (70, 250))
 
         current_time_load_st = float(time.time() - start_time_load_st)
 
@@ -630,48 +713,58 @@ while running: #ГЛАВНЫЙ ЦИКЛ ----------------------------------------
         elif 6.7 < current_time_load_st < 7.0:
             cur_start_load_id = 0
         elif current_time_load_st > 7.5:
-            game_status = 1
+            game_mode = 1
 
-    elif game_status == 0: # ЗАГРУЗОЧНЫЙ ЭКРАН ПЕРЕД ДРАФТОМ
+    elif game_mode == 0: # ЗАГРУЗОЧНЫЙ ЭКРАН ПЕРЕД ДРАФТОМ
         screen.fill((247, 204, 161))
 
-        screen.blit(menu_logo, (150, 100))
-        screen.blit(loading_arr[cur_load_id], (275, 500))
+        screen.blit(loading1_bg, (0,0))
+
+        #screen.blit(menu_logo, (150, 100))
+        screen.blit(loading_arr_gm3[cur_load_id], (230, 700))
         if delay_gm_2_check:
             start_time_l = time.time()
             delay_gm_2_check = False
 
-        current_time_l = int(time.time()-start_time_l)
-        if current_time_l == 1:
+        current_time_l = float(time.time() - start_time_l)
+        if 0.5 <= current_time_l < 1.0:
             cur_load_id = 1
-        elif current_time_l == 2:
+        elif 1.0 <= current_time_l < 1.5:
             cur_load_id = 2
-        elif current_time_l == 3:
+        elif 1.5 <= current_time_l < 2.0:
             cur_load_id = 3
-        elif current_time_l == 4:
+        elif 2.0 <= current_time_l < 2.5:
             cur_load_id = 4
+        elif 2.5 <= current_time_l < 3.0:
+            cur_load_id = 5
+        elif 3.0 <= current_time_l < 3.5:
+            cur_load_id = 6
+        elif 3.5 <= current_time_l < 4.0:
+            cur_load_id = 7
 
-        if current_time_l is end_time_l:
+        if current_time_l > end_time_l:
             main_tracks_arr[cur_track].stop()
             cur_track +=1
             if cur_track == len(main_tracks_arr):
                 cur_track = 0
             music_cheked = False
-            game_status = 2
+            game_mode = 2
 
-    elif game_status == 1: # ГЛАВНОЕ МЕНЮ
+    elif game_mode == 1: # ГЛАВНОЕ МЕНЮ
         if not music_cheked:
             main_tracks_arr[cur_track].play()
             music_cheked = True
         screen.fill((210, 143, 82))
 
-        screen.blit(menu_logo, (150, 100))
+        screen.blit(main_menu_bg, (0, 0))
+
+        #screen.blit(menu_logo, (150, 100))
         screen.blit(start_button_img, start_button_rect)
 
 
         if start_button_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
-            game_status = 0
-    elif game_status == 2: # МЕНЮ ДРАФТА-----------------------------------------------------------------------------------
+            game_mode = 0
+    elif game_mode == 2: # МЕНЮ ДРАФТА-----------------------------------------------------------------------------------
 
         #CHECK FOR COMPL TEAM
         compl_team = True
@@ -682,7 +775,7 @@ while running: #ГЛАВНЫЙ ЦИКЛ ----------------------------------------
         moneyOUT = str(str(money) + ' $')
         money_text = valFont.render(moneyOUT, True, (46, 46, 48))
         if not check_window_gm_2:
-            pygame.display.set_mode((1200, 990), flags=pygame.NOFRAME)
+            pygame.display.set_mode((1200, 1024), flags=pygame.NOFRAME)
             check_window_gm_2 = True
         if not music_cheked:
             main_tracks_arr[cur_track].play()
@@ -767,8 +860,12 @@ while running: #ГЛАВНЫЙ ЦИКЛ ----------------------------------------
                         tap_card_TorD = 0
                 if reject_player_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and compl_team:
                     if not click_check:
-                        game_status = 3
                         click_check = True
+                        t_s_from_back = False
+                        cur_load_id_3 = 0
+                        delay_gm_3_check = True
+                        game_mode = 3
+
             else:
                 click_check = False
 
@@ -947,11 +1044,13 @@ while running: #ГЛАВНЫЙ ЦИКЛ ----------------------------------------
             else:
                 click_check = False
 
-    elif game_status == 3:  # ЗАГРУЗОЧНЫЙ ЭКРАН ПЕРЕД GAMEMODE 4-----------------------------------------------------------------------------------
+    elif game_mode == 3:  # ЗАГРУЗОЧНЫЙ ЭКРАН ПЕРЕД GAMEMODE 4-----------------------------------------------------------------------------------
         screen.fill((112, 128, 144))
 
-        screen.blit(menu_logo, (300, 100))
-        screen.blit(loading_arr_gm3[cur_load_id_3], (315, 500))
+        screen.blit(loading3_bg, (0, 0))
+
+        #screen.blit(menu_logo, (300, 100))
+        screen.blit(loading_arr_gm3[cur_load_id_3], (318, 700))
         if delay_gm_3_check:
             start_time_l = time.time()
             delay_gm_3_check = False
@@ -978,13 +1077,120 @@ while running: #ГЛАВНЫЙ ЦИКЛ ----------------------------------------
             if cur_track == len(main_tracks_arr):
                 cur_track = 0
             music_cheked = False
-            game_status = 4
+            if t_s_from_back:
+                game_mode = 2
+            else:
+                game_mode = 4
 
-    elif game_status == 4:  # ЗАГРУЗОЧНЫЙ ЭКРАН ПЕРЕД GAMEMODE 4-----------------------------------------------------------------------------------
+    elif game_mode == 4:  # ЗАГРУЗОЧНЫЙ ЭКРАН ПЕРЕД GAMEMODE 4-----------------------------------------------------------------------------------
         if not music_cheked:
             main_tracks_arr[cur_track].play()
             music_cheked = True
+            setup_rect_for_but()
         screen.fill((47, 79, 79))
+
+        pygame.draw.rect(screen, (23, 40, 40), (20,20,520,950))
+        pygame.draw.rect(screen, (23, 40, 40), (560, 20, 620, 300))
+        pygame.draw.rect(screen, (23, 40, 40), (560, 340, 620, 400))
+        #pygame.draw.rect(screen, (112, 128, 144), (40, 80, 480, 500))
+        screen.blit(team_logo_arr[cur_logo_embl][cur_logo_color], (20,120))
+        screen.blit(yr_team_text, (110,50))
+        screen.blit(yr_team_name_text, (185, 650))
+        screen.blit(yr_team_manager_text, (140, 800))
+        pygame.draw.rect(screen, (112, 128, 144), (60, 750, 420, 5), border_radius=2)
+        pygame.draw.rect(screen, (112, 128, 144), (60, 900, 420, 5), border_radius=2)
+        name_team_text = team_setup3.render(team_name, True, (215, 215, 215))
+        screen.blit(name_team_text, (270 - (8.5 * len(team_name)), 710))
+        manager_team_text = team_setup3.render(manager_name, True, (215, 215, 215))
+        screen.blit(manager_team_text, (270 - (8 * len(manager_name)), 860))
+
+
+        screen.blit(team_name_input_text, (645,50))
+        if team_name_input_check:
+            pygame.draw.rect(screen, (3, 7, 7), input_box_team_name)
+        else:
+            pygame.draw.rect(screen, (10, 24, 24), input_box_team_name)
+        input_name_team = team_setup2.render(team_name, True, (112, 128, 144))
+        screen.blit(input_name_team, (890-(7*len(team_name)), 110))
+
+        screen.blit(team_manager_input_text, (650, 190))
+        if team_manager_input_check:
+            pygame.draw.rect(screen, (3, 7, 7), input_box_manager_name)
+        else:
+            pygame.draw.rect(screen, (10, 24, 24), input_box_manager_name)
+        input_name_manager = team_setup2.render(manager_name, True, (112, 128, 144))
+        screen.blit(input_name_manager, (890 - (7 * len(manager_name)), 250))
+
+        screen.blit(team_setup_rnd_but_img, (800,780))
+        screen.blit(team_setup_back_but_img, (600, 780))
+        screen.blit(team_setup_next_but_img, (1000, 780))
+
+        screen.blit(team_logo_input_text, (695, 370))
+        l_x = 655
+        l_y = 460
+        for l_i in range(5):
+            pygame.draw.rect(screen, (112, 128, 144), (l_x - 23, l_y - 8, 71, 71), border_radius=20)
+            if l_i == cur_logo_embl:
+                pygame.draw.rect(screen, (150, 150, 150), (l_x - 20, l_y - 5, 65, 65), border_radius=20)
+            else:
+                pygame.draw.rect(screen, (215,215,215), (l_x - 20, l_y - 5, 65, 65), border_radius=20)
+            screen.blit(team_logo_type_text[l_i], (l_x, l_y))
+
+            l_x += 100
+
+        ll_x = 655
+        ll_y = 600
+        for ll_i in range(5):
+            pygame.draw.rect(screen, (112, 128, 144), (ll_x - 23, ll_y - 8, 71, 71), border_radius=20)
+            if ll_i == cur_logo_color:
+                pygame.draw.rect(screen, team_logo_color_active_text[ll_i], (ll_x - 20, ll_y - 5, 65, 65), border_radius=20)
+            else:
+                pygame.draw.rect(screen, team_logo_color_text[ll_i], (ll_x - 20, ll_y - 5, 65, 65), border_radius=20)
+
+            ll_x += 100
+
+
+
+        if pygame.mouse.get_pressed()[0]:
+            for (i,el4) in enumerate(team_logo_type_rect):
+                if el4.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and game_mode == 4:
+                    if i == 0:
+                        cur_logo_embl = 0
+                    elif i == 1:
+                        cur_logo_embl = 1
+                    elif i == 2:
+                        cur_logo_embl = 2
+                    elif i == 3:
+                        cur_logo_embl = 3
+                    elif i == 4:
+                        cur_logo_embl = 4
+            for (i_2,el4_2) in enumerate(team_logo_color_rect):
+                if el4_2.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and game_mode == 4:
+                    if i_2 == 0:
+                        cur_logo_color = 0
+                    elif i_2 == 1:
+                        cur_logo_color = 1
+                    elif i_2 == 2:
+                        cur_logo_color = 2
+                    elif i_2 == 3:
+                        cur_logo_color = 3
+                    elif i_2 == 4:
+                        cur_logo_color = 4
+            if team_setup_rnd_but_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and game_mode == 4:
+                if t_s_check_click_rnd:
+                    cur_logo_embl = random.randint(0,4)
+                    cur_logo_color = random.randint(0, 4)
+                    team_name = random.choice(random_team_names)
+                    manager_name = random.choice(random_team_managers)
+                    t_s_check_click_rnd = False
+                    t_s_check_click_back = False
+            if team_setup_back_but_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0] and game_mode == 4:
+                if t_s_check_click_back:
+                    t_s_from_back = True
+                    cur_load_id_3 = 0
+                    delay_gm_3_check = True
+                    game_mode = 3
+
 
 
     pygame.display.update()
@@ -1020,3 +1226,53 @@ while running: #ГЛАВНЫЙ ЦИКЛ ----------------------------------------
              ef_blacked_screen_check = True
         if event.type == pygame.KEYUP and event.key == pygame.K_n:
              ef_blacked_screen_check = False
+        if game_mode == 4:
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if input_box_team_name.collidepoint(event.pos):
+                    team_name_input_check = True
+                else:
+                    team_name_input_check = False
+
+                if input_box_manager_name.collidepoint(event.pos):
+                    team_manager_input_check = True
+                else:
+                    team_manager_input_check = False
+
+            if event.type == pygame.KEYDOWN:
+                if team_name_input_check:
+                    if event.key == pygame.K_BACKSPACE:
+                        team_name = team_name[:-1]
+                    else:
+                        team_name += event.unicode
+
+                if team_manager_input_check:
+                    if event.key == pygame.K_BACKSPACE:
+                        manager_name = manager_name[:-1]
+                    else:
+                        manager_name += event.unicode
+
+            if event.type == pygame.KEYUP and event.key == pygame.K_p and game_mode == 4:
+                if cur_logo_color == 4:
+                    cur_logo_color = 0
+                else:
+                    cur_logo_color+=1
+            if event.type == pygame.KEYUP and event.key == pygame.K_o and game_mode == 4:
+                if cur_logo_color == 0:
+                    cur_logo_color = 4
+                else:
+                    cur_logo_color-=1
+            if event.type == pygame.KEYUP and event.key == pygame.K_l and game_mode == 4:
+                if cur_logo_embl == 4:
+                    cur_logo_embl = 0
+                else:
+                    cur_logo_embl+=1
+            if event.type == pygame.KEYUP and event.key == pygame.K_k and game_mode == 4:
+                if cur_logo_embl == 0:
+                    cur_logo_embl = 4
+                else:
+                    cur_logo_embl -= 1
+            if event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    t_s_check_click_rnd = True
+                    t_s_check_click_back = True

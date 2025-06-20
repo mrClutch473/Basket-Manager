@@ -1,0 +1,49 @@
+SAVES:
+    - id : int  (номер сохранения)
+    - name : str  (название сохранения)
+    - date : datetime  (дата сохранения)
+    - game_plot : int  (сценарий игры)
+    - game_mode : int  (окно игры)
+    - screen : pygame.display  (размер экрана)
+    - All_Commands : БД SQL  (объект базы данных со всеми командами)
+    - player_team_id : int  (номер команды игрока)
+    - teams_count : int  (текущее количество команд в лиге)
+
+    All_Commands:
+        - id : int  (номер команды)
+        - team_name : str  (название команды)
+        - manager_name : str  (имя и фамилия менеджера)
+        - cur_logo_embl : int  (номер типа логотипа)
+        - cur_logo_color : int  (номер цвета логотипа)
+        - My_team : БД SQL  (объект базы данных с конкретной командой)
+
+
+        My_team:
+            - my_teamArr : [Player] - arr, БД SQL  (список из объектов базы данных игрока)
+            - team_name : str  (название команды)
+            - manager_name : str  (имя и фамилия менеджера)
+            - cur_logo_embl : int  (номер типа логотипа)
+            - cur_logo_color : int  (номер цвета логотипа)
+            - (далее добавить сюда все что связанно с командой (стратегия, технологии все дела))
+
+            Player:
+                - id : int  (номер игрока в команде)
+                - name : str  (имя и фамилия игрока)
+                - age : int  (возраст игрока)
+                - icon : pygame.image  (фотка игрока)
+                - icon_id : int  (номер фотки игрока (для других форм фотки))
+                - prise : int  (цена игрока)
+                - ovrl : int  (оверол игрока (сумарный рейтинг))
+                - pos : str  (позиция игрока)
+                - pl_number : int  (номер игрока (номер который пишут на джерси))
+                - Stats : БД SQL  (объект базы данных со статами конкретного игры)
+
+                Stats:
+                    -stat_speed : int  (скорость игрока)
+                    -stat_dribble : int  (дриблинг игрока)
+                    -stat_defense : int  (защита игрока)
+                    -stat_rebound : int  (подборы игрока)
+                    -stat_shoot : int  (бросок игрока)
+                    -stat_3pt : int  (трехочковый игрока)
+                    -stat_free : int  (штрафные игрока)
+                    -stat_pass : int  (пассы игрока)
